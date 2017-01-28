@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/chrisport/go-lang-detector/langdet"
+	"github.com/imankulov/go-lang-detector/langdet"
 	"io/ioutil"
 	"os"
 )

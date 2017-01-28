@@ -1,10 +1,10 @@
 package langdet_test
 
 import (
+	"github.com/imankulov/go-lang-detector/langdet"
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/chrisport/go-lang-detector/langdet"
-	"testing"
 	"strings"
+	"testing"
 )
 
 func createMapRanking(tokensInRank ...string) map[string]int {

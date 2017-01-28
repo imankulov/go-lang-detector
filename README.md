@@ -1,14 +1,14 @@
 [![wercker status](https://app.wercker.com/status/671a0e9ac622f35347d86d2dc104dfa0/m "wercker status")](https://app.wercker.com/project/bykey/671a0e9ac622f35347d86d2dc104dfa0)
-[![Coverage Status](https://img.shields.io/coveralls/chrisport/go-lang-detector.svg)](https://coveralls.io/r/chrisport/go-lang-detector?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/imankulov/go-lang-detector.svg)](https://coveralls.io/r/imankulov/go-lang-detector?branch=master)
 # Language Detector
 
-This golang library provides functionality to analyze and recognize language based on text.  
+This golang library provides functionality to analyze and recognize language based on text.
 
 
-The implementation is based on the following paper:  
-N-Gram-Based Text Categorization  
-William B. Cavnar and John M. Trenkle  
-Environmental Research Institute of Michigan P.O. Box 134001  
+The implementation is based on the following paper:
+N-Gram-Based Text Categorization
+William B. Cavnar and John M. Trenkle
+Environmental Research Institute of Michigan P.O. Box 134001
 Ann Arbor MI 48113-4001
 
 ### Language profile
