@@ -3,8 +3,8 @@ package langdet
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"io"
+	"io/ioutil"
 	"sort"
 )
 
@@ -16,6 +16,7 @@ var DefaultMinimumConfidence float32 = 0.7
 
 var defaultLanguages = []Language{}
 
+// DefaultDetector is a default detector instance
 var DefaultDetector = Detector{&defaultLanguages, DefaultMinimumConfidence}
 
 func init() {
@@ -41,7 +42,7 @@ func InitWithDefault(filePath string) {
 	parseExistingLanguageMap(&analyzedInput, &defaultLanguages)
 }
 
-// InitWithDefault initializes the default languages with a provided Reader
+// InitWithDefaultFromReader initializes the default languages with a provided Reader
 // containing Marshalled array of Languages
 func InitWithDefaultFromReader(reader io.Reader) {
 	analyzedInput, err := ioutil.ReadAll(reader)
@@ -70,7 +71,7 @@ func NewDetector() Detector {
 	return Detector{&[]Language{}, DefaultMinimumConfidence}
 }
 
-// NewDetectorDefault returns a new Detector with the default languages, if loaded:
+// NewDefaultLanguages returns a new Detector with the default languages, if loaded:
 // currently: Arabic, English, French, German, Hebrew, Russian, Turkish
 func NewDefaultLanguages() Detector {
 	defaultCopy := make([]Language, len(defaultLanguages))
@@ -89,7 +90,7 @@ func NewWithLanguagesFromReader(reader io.Reader) Detector {
 	return Detector{&languages, DefaultMinimumConfidence}
 }
 
-// Add language analyzes a text and creates a new Language with given name.
+// AddLanguageFromText adds language analyzes a text and creates a new Language with given name.
 // The new language will be detectable afterwards by this Detector instance.
 func (d *Detector) AddLanguageFromText(textToAnalyze, languageName string) {
 	if d.Languages == nil {
@@ -101,7 +102,7 @@ func (d *Detector) AddLanguageFromText(textToAnalyze, languageName string) {
 	*d.Languages = updatedList
 }
 
-// Add language adds a language to the list of detectable languages by this Detector instance.
+// AddLanguage adds language adds a language to the list of detectable languages by this Detector instance.
 func (d *Detector) AddLanguage(languages ...Language) {
 	if d.Languages == nil {
 		s := make([]Language, 0, 0)
@@ -154,7 +155,7 @@ func (d *Detector) closestFromTable(lookupMap map[string]int) []DetectionResult 
 		lSize := len(language.Profile)
 		maxPossibleDistance := lSize * inputSize
 		dist := GetDistance(lookupMap, language.Profile, lSize)
-		relativeDistance := 1 - float64(dist) / float64(maxPossibleDistance)
+		relativeDistance := 1 - float64(dist)/float64(maxPossibleDistance)
 		confidence := int(relativeDistance * 100)
 		res = append(res, DetectionResult{Name: language.Name, Confidence: confidence})
 	}
@@ -163,7 +164,7 @@ func (d *Detector) closestFromTable(lookupMap map[string]int) []DetectionResult 
 	return res
 }
 
-// getDistance calculates the out-of-place distance between two Profiles,
+// GetDistance calculates the out-of-place distance between two Profiles,
 // taking into account only items of mapA, that have a value bigger then 300
 func GetDistance(mapA, mapB map[string]int, maxDist int) int {
 	var result int

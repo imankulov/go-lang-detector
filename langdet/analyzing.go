@@ -19,7 +19,7 @@ func Analyze(text, name string) Language {
 	return Language{Name: name, Profile: ranked}
 }
 
-// creates the map [token] rank from a map [token] occurrence
+// CreateRankLookupMap creates the map [token] rank from a map [token] occurrence
 func CreateRankLookupMap(input map[string]int) map[string]int {
 	tokens := make([]Token, len(input))
 	counter := 0
@@ -70,7 +70,7 @@ func generateNthGrams(resultMap map[string]int, text string, n int) {
 	upperBound := utf8.RuneCountInString(text) - (n - 1)
 	for p := 0; p < upperBound; p++ {
 		currentToken := text[p : p+n]
-		resultMap[currentToken] += 1
+		resultMap[currentToken]++
 	}
 }
 
