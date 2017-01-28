@@ -43,13 +43,19 @@ func CreateRankLookupMap(input map[string]int) map[string]int {
 // CreateOccurenceMap creates a map[token]occurrence from a given text and up to a given gram depth
 // gramDepth=1 means only 1-letter tokens are created, gramDepth=2 means 1- and 2-letters token are created, etc.
 func CreateOccurenceMap(text string, gramDepth int) map[string]int {
+	result := make(map[string]int)
+	UpdateOccurenceMap(result, text, gramDepth)
+	return result
+}
+
+// UpdateOccurenceMap updates a map[token]occurence from the text. Useful to iterate over the
+// list of strings to add them
+func UpdateOccurenceMap(occurenceMap map[string]int, text string, gramDepth int) {
 	text = cleanText(text)
 	tokens := strings.Split(text, " ")
-	result := make(map[string]int)
 	for _, token := range tokens {
-		analyseToken(result, token, gramDepth)
+		analyseToken(occurenceMap, token, gramDepth)
 	}
-	return result
 }
 
 // analyseToken analyses a token to a certain gramDepth and stores the result in resultMap
