@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"path"
 	"sort"
 )
 
@@ -88,6 +89,36 @@ func NewWithLanguagesFromReader(reader io.Reader) Detector {
 	}
 	parseExistingLanguageMap(&analyzedInput, &languages)
 	return Detector{&languages, DefaultMinimumConfidence}
+}
+
+// LoadLanguagesFromDir initializes the default languages with json
+// files from the specific directory
+func (d *Detector) LoadLanguagesFromDir(dirPath string) error {
+	languages := make([]Language, 0, 0)
+
+	files, err := ioutil.ReadDir(dirPath)
+	if err != nil {
+		return err
+	}
+	for _, fileInfo := range files {
+		if fileInfo.IsDir() {
+			continue
+		}
+		fullName := path.Join(dirPath, fileInfo.Name())
+		jsonContent, err := ioutil.ReadFile(fullName)
+		if err != nil {
+			return err
+		}
+		lang := Language{}
+		err = json.Unmarshal(jsonContent, &lang)
+		if err != nil {
+			return err
+		}
+		languages = append(languages, lang)
+	}
+
+	d.Languages = &languages
+	return nil
 }
 
 // AddLanguageFromText adds language analyzes a text and creates a new Language with given name.
