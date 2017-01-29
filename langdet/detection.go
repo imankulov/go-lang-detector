@@ -20,19 +20,6 @@ var defaultLanguages = []Language{}
 // DefaultDetector is a default detector instance
 var DefaultDetector = Detector{&defaultLanguages, DefaultMinimumConfidence}
 
-func init() {
-	analyzedInput, err := ioutil.ReadFile("default_languages.json")
-	if err != nil {
-		fmt.Println("go-lang-detector/langdet: No default languages loaded. default_languages.json not present")
-		return
-	}
-	err = json.Unmarshal(analyzedInput, &defaultLanguages)
-	if err != nil {
-		fmt.Println("go-lang-detector/langdet: Could not unmarshall default languages from default_languages.json")
-		return
-	}
-}
-
 // InitWithDefault initializes the default languages with a provided file
 // containing Marshalled array of Languages
 func InitWithDefault(filePath string) {
